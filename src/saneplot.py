@@ -5,8 +5,16 @@ class SanePlot:
                  xlim=None, ylim=None,
                  text=None, text_x_rel=None, text_x_abs=None, text_y_rel=None, text_y_abs=None,
                  log_x_base=0, log_y_base=0,
-                 x_label=None, y_label=None):
-
+                 x_label=None, y_label=None, linechange='monochrome'):
+        self._linestyles = None
+        if linechange is not None:
+            if linechange == 'monochrome':
+                self._linestyles = ['k-', 'k--', 'ko', 'k^', 'k:', 'k*']
+            elif linechange == 'color':
+                self._linestyles = ['k', 'g', 'b', 'r', 'c']
+            else:
+                self._linestyles = linechange
+        
         self._nplots = 0
         self._figsize = figsize  # done
         self._legendloc = legendloc  # done
@@ -80,7 +88,13 @@ class SanePlot:
             linewidth = self._linewidth
         if markersize is None:
             markersize = self._markersize
-        self._ax.plot(x, y, label=label, linewidth=linewidth, markersize=markersize)
+        
+        if self._linestyles is not None:
+            self._ax.plot(x, y, self._linestyles[self._nplots % len(self._linestyles)], label=label,
+                          linewidth=linewidth, markersize=markersize)
+        else:
+            self._ax.plot(x, y, label=label,
+                          linewidth=linewidth, markersize=markersize)
         self._nplots += 1
         return self._fig
         
