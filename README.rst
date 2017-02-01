@@ -85,7 +85,7 @@ Examples
 
 This can be inserted into a Jupyter notebook with ``%matplotlib inline`` added and will show the resulting plots right there.
 
-.. sourcecode:: python
+.. code:: python
     import numpy as np
     from saneplot import SanePlot
 
