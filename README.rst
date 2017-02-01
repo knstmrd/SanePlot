@@ -83,9 +83,8 @@ The methods are:
 Examples
 --------
 
-This can be inserted into a Jupyter notebook with ``%matplotlib inline`` added and will show the resulting plots right there.
+This can be inserted into a Jupyter notebook with ``%matplotlib inline`` added and will show the resulting plots right there.::
 
-.. code:: python
     import numpy as np
     from saneplot import SanePlot
 
