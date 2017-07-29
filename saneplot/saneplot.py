@@ -6,7 +6,6 @@ class SanePlot:
                  fontfamily='fantasy', font='Calibri',
                  legend_size=26, tick_size=24, xy_label_size=32, textsize=27, linewidth=5, markersize=5,
                  xlim=None, ylim=None,
-                 text=None, text_x_rel=None, text_x_abs=None, text_y_rel=None, text_y_abs=None,
                  log_x_base=0, log_y_base=0,
                  x_label=None, y_label=None, linechange='monochrome'):
         self._linestyles = None
@@ -67,23 +66,22 @@ class SanePlot:
         if y_label is not None:
             self._ax.set_ylabel(y_label, fontsize=self._xy_label_size)
 
-    def add_text(self, textsize=None):
+    def add_text(self, text, text=None, text_x_rel=None, text_y_rel=None, text_x_abs=0, text_y_abs=0, textsize=None):
         textpos_x = 0
         textpos_y = 0
-        if self._text is not None:
-            if self._text_x_rel is not None:
-                xl = self._ax.get_xlim()
-                textpos_x = xl[0] + (xl[1] - xl[0]) * self._text_x_rel
-            else:
-                textpos_x = self._text_x_abs
-            if self._text_y_rel is not None:
-                yl = self._ax.get_ylim()
-                textpos_y = yl[0] + (yl[1] - yl[0]) * self._text_y_rel
-            else:
-                textpos_y = self._text_y_abs
+        if text_x_rel is not None:
+            xl = self._ax.get_xlim()
+            textpos_x = xl[0] + (xl[1] - xl[0]) * text_x_rel + text_x_abs
+        else:
+            textpos_x = text_x_abs
+        if text_y_rel is not None:
+            yl = self._ax.get_ylim()
+            textpos_y = yl[0] + (yl[1] - yl[0]) * text_y_rel + text_y_abs
+        else:
+            textpos_y = text_y_abs
         if textsize is None:
             textsize = self._textsize
-        self._ax.text(textpos_x, textpos_y, self._text, fontsize=textsize)
+        self._ax.text(textpos_x, textpos_y, text, fontsize=textsize)
         return self._fig
     
     def plot(self, x, y, label=None, linewidth=None, markersize=None):
